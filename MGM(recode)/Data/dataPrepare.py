@@ -9,12 +9,14 @@ def get_TrajPoiEmbedding(traj_list):
     poiEmbedding=[]
     for traj in traj_list:
         poiArray = []
-        for location in traj:
+        for index,location in enumerate(traj):
             # print("location is")
             # print(location)
+            if index ==0:
+                poiArray.append(location)
             location=str(location)
             if location in zoneDict:
-                print("找到对应poi向量")
+                # print("找到对应poi向量")
                 poiArray.append(zoneDict[location])
             else:
                 # print("无对应poi种类向量")
@@ -104,12 +106,25 @@ def TrajEmbedding(path,batchSize):
 
     return max,trajList,end_trajList
 
+def get_timeStamp(path,trajList):
+
+    timeList=[]
+
+    return timeList
+
+
 trajlist=get_traj('/data/nas/zhangxiang/0712_newtraj_500.csv')
 
+
+print(trajlist[0:3])
 max_squence,padding_trajList=data_padding(trajlist,500)
 end_trajList=data_SplistBatch(padding_trajList,64)
 
 poi=get_TrajPoiEmbedding(padding_trajList)
+
+print(poi[0][0])
+print(poi[1][0])
+print(poi[2][0])
 end_poiEmbedding=data_SplistBatch(poi,64)
 
 
